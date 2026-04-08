@@ -7,6 +7,16 @@
     width: 100%;
 }
 
+/* 导航栏样式：缩减字体 */
+.visible-links {
+    font-size: 0.8em;
+}
+
+/* 导航栏按钮样式：让底部的下划线动画间距略增加一点 */
+.visible-links .masthead__menu-item a {
+    padding-bottom: 5px;
+}
+
 /* 自定义样式 - 缩小博客正文字体 */
 .page__content {
     font-size: 0.8em;
