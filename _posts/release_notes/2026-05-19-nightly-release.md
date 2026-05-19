@@ -28,3 +28,13 @@ categories: nightly-release
 - (桌面端) 修复了全局字体设置无法影响应用内部字体的问题；
 - (桌面端) 在 Agent 完成这一轮对话的时候自动将光标聚焦到输入控件；
 - (桌面端) 修复多处在正在输入状态下回车时，错误地触发消息提交的问题；
+
+## 下载
+
+**Cli**: `npm i -g "@bitclub.ai/opendesk-cli@nightly`
+**桌面端**:
+
+- [Windows x86 安装包](https://download.bitclub.ai/build/nightly/win/opendesk-win-x86-0.2.0-nightly-20260519.msi)
+- [Harmony OS 安装包](https://download.bitclub.ai/build/nightly/ohos/opendesk-ohos-0.2.0-nightly-20260519.hap)
+
+注: 鸿蒙安装包需要自行通过 [Deveco Studio](http://developer.huawei.com/consumer/cn/deveco-studio/) 或 [Auto-installer](https://github.com/likuai2010/auto-installer/) 签名安装。
