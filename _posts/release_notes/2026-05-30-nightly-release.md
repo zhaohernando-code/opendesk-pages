@@ -1,13 +1,13 @@
 ---
 layout: single
 toc: true
-title:  2026.5.29 日构建更新
-date:   2026-05-29 09:00:00 +0800
+title:  2026.5.30 日构建更新
+date:   2026-05-30 09:00:00 +0800
 classes: no-sidebar
 categories: nightly-release
 ---
 
-# 2026.5.29 日构建更新内容
+# 2026.5.30 日构建更新内容
 
 ## ✨ 新功能
 
@@ -24,10 +24,10 @@ categories: nightly-release
 
 ## 下载
 
-**Cli**: 在终端中运行 `npm i -g "@bitclub.ai/opendesk-cli@0.2.0-nightly-20260529` 安装, 或启动 opendesk 后运行 `/upgrade` 命令来升级。
+**Cli**: 在终端中运行 `npm i -g "@bitclub.ai/opendesk-cli@0.2.0-nightly-20260530` 安装, 或启动 opendesk 后运行 `/upgrade` 命令来升级。
 
 **桌面端**:
-- [Windows x86 安装包](https://download.bitclub.ai/build/nightly/win/opendesk-win-x86-0.2.0-nightly-20260529.msi)
-- [Harmony OS 安装包](https://download.bitclub.ai/build/nightly/ohos/opendesk-ohos-0.2.0-nightly-20260529.hap)
+- [Windows x86 安装包](https://download.bitclub.ai/build/nightly/win/opendesk-win-x86-0.2.0-nightly-20260530.msi)
+- [Harmony OS 安装包](https://download.bitclub.ai/build/nightly/ohos/opendesk-ohos-0.2.0-nightly-20260530.hap)
 
 注: 鸿蒙安装包需要自己通过 [Deveco Studio](http://developer.huawei.com/consumer/cn/deveco-studio/) 或 [Auto-installer](https://github.com/likuai2010/auto-installer/) 手动签名后安装。
