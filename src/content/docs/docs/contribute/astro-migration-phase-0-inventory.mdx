@@ -72,11 +72,11 @@ description: "OpenDesk Astro 迁移 Phase 0 盘点"
 
 当前 Jekyll permalink 和导航同时存在带尾斜杠和不带尾斜杠的路径，例如 `/docs/manual/cli/`、`/docs/plugins/`、`/docs/desktop/` 与 `/docs/manual/cli`。Astro 迁移采用以下策略：
 
-1. Phase 1 在 `astro.config.mjs` 中先配置 `trailingSlash: "ignore"`，降低切换期路径差异风险。
+1. Phase 1 迁移期曾使用 `trailingSlash: "ignore"` 降低路径差异风险；Phase 5 切到 Astro-only 后改为 `trailingSlash: "always"`，让静态目录输出和 Pagefind 搜索 URL 保持一致。
 2. 对已有导航路径保留当前写法；对同一页面的另一种写法建立 redirect 或等价可访问路径。
-3. 文档正文新增链接时优先使用无尾斜杠的页面路径，目录页保留尾斜杠，例如 `/docs/`、`/docs/quickstart/`。
+3. 文档正文新增链接时优先使用带尾斜杠的页面路径，例如 `/docs/quickstart/cli/`、`/docs/`、`/docs/quickstart/`。
 4. Phase 5 切流前用主要 URL 清单同时验证带尾斜杠和不带尾斜杠访问。
-5. 最终 canonical URL 采用“普通内容页无尾斜杠、目录索引页保留尾斜杠”的规则；另一种写法通过平台 redirect 或等价页面兼容。
+5. 最终 canonical URL 统一采用带尾斜杠规则；另一种写法通过平台 redirect 或等价页面兼容。
 
 `astro.config.mjs` 不设置 `base`，生产站点从域名根路径发布；Starlight 的 `/docs/**` 路由由 `src/content/docs/docs/**` 目录层级产生。
 

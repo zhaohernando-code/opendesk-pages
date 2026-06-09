@@ -2,7 +2,9 @@
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import { site } from '../config/site';
+import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
+import '../styles/header.css';
 
 const { frontmatter = {} } = Astro.props;
 const title = frontmatter.title ? `${frontmatter.title} | ${site.title}` : site.title;
@@ -19,6 +21,7 @@ const hideFooter = frontmatter.hideFooter ?? false;
     <meta name="description" content={description} />
     <link rel="icon" href="/favicon.ico" />
     <title>{title}</title>
+    <ClientRouter />
   </head>
   <body>
     <div class="site-shell">

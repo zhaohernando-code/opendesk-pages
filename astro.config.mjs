@@ -6,7 +6,10 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: 'https://opendesk.bitclub.ai',
   // Production deploys at the domain root, so public page assets intentionally use root-absolute URLs.
-  trailingSlash: 'ignore',
+  trailingSlash: 'always',
+  devToolbar: {
+    enabled: false,
+  },
   integrations: [
     starlight({
       title: 'OpenDesk',
@@ -19,7 +22,11 @@ export default defineConfig({
       pagefind: true,
       // Site-level fallback is provided by src/pages/404.astro, which builds to dist/404.html.
       disable404Route: true,
-      customCss: ['./src/styles/starlight.css'],
+      customCss: ['./src/styles/starlight.css', './src/styles/header.css'],
+      components: {
+        Head: './src/components/starlight/Head.astro',
+        Header: './src/components/starlight/Header.astro',
+      },
       sidebar: [
         {
           label: '快速开始',

@@ -164,11 +164,11 @@ opendesk-pages/
 路径规范：
 
 - 内部链接优先沿用当前公开 URL；对同一页面的带尾斜杠和不带尾斜杠版本必须建立兼容。
-- Astro 初始化时先配置 `trailingSlash: "ignore"`，并为已知旧路径补 redirects 或等价页面，避免 Jekyll 到 Astro 切换后出现路径级 404。
+- Astro 初始化期先使用 `trailingSlash: "ignore"` 降低迁移风险；切到 Astro-only 后改为 `trailingSlash: "always"`，让静态目录输出和 Pagefind 搜索 URL 保持一致，并为已知旧路径补 redirects 或等价页面，避免 Jekyll 到 Astro 切换后出现路径级 404。
 - 文档中若出现旧锚点链接，迁移时必须先保留旧锚点或建立锚点映射，再删除 Kramdown 属性语法。
 - Starlight 官方要求文档内容位于 `src/content/docs/`；若要让所有文档页面位于 `/docs/**` 子路径，需要将内容放入 `src/content/docs/docs/`。
 - `astro.config.mjs` 不设置 `base`，生产站点从域名根路径发布；`/docs/**` 由 Starlight 内容目录 `src/content/docs/docs/**` 产生，不通过 `base: "/docs"` 实现。
-- Phase 5 切流时采用明确的 canonical URL：普通内容页优先使用无尾斜杠路径，目录索引页保留尾斜杠，例如 `/docs/`、`/docs/quickstart/`；另一种写法通过平台 redirect 或等价页面兼容。
+- Phase 5 切流时采用明确的 canonical URL：所有页面统一使用带尾斜杠路径，例如 `/docs/quickstart/cli/`、`/docs/`、`/docs/quickstart/`；另一种写法通过平台 redirect 或等价页面兼容。
 
 ## 首页落地原则
 

@@ -1,0 +1,125 @@
+---
+const isDev = import.meta.env.DEV;
+---
+
+<site-search-box class="site-search" data-dev={isDev ? 'true' : undefined}>
+  <button type="button" class="site-search__button" data-open-search aria-label="搜索文档" aria-keyshortcuts="Control+K">
+    <span class="site-search__icon" aria-hidden="true"></span>
+    <span class="site-search__label">搜索文档</span>
+    <kbd class="site-search__shortcut">Ctrl K</kbd>
+  </button>
+  <dialog class="site-search__dialog" aria-label="搜索文档">
+    <div class="site-search__panel">
+      <button type="button" class="site-search__close" data-close-search>关闭</button>
+      <div class="site-search__mount" data-search-mount></div>
+    </div>
+  </dialog>
+</site-search-box>
+
+<script>
+  class SiteSearchBox extends HTMLElement {
+    private initialized = false;
+    private abortController?: AbortController;
+
+    connectedCallback() {
+      this.abortController?.abort();
+      const controller = new AbortController();
+      this.abortController = controller;
+
+      const openButton = this.querySelector<HTMLButtonElement>('[data-open-search]');
+      const closeButton = this.querySelector<HTMLButtonElement>('[data-close-search]');
+      const dialog = this.querySelector<HTMLDialogElement>('dialog');
+      const panel = this.querySelector<HTMLElement>('.site-search__panel');
+      const shortcut = this.querySelector<HTMLElement>('.site-search__shortcut');
+
+      if (!openButton || !closeButton || !dialog || !panel) return;
+
+      if (shortcut && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+        shortcut.textContent = '⌘ K';
+        openButton.setAttribute('aria-keyshortcuts', 'Meta+K');
+      }
+
+      const open = async () => {
+        dialog.showModal();
+        document.body.toggleAttribute('data-search-modal-open', true);
+        await this.mountSearch();
+        dialog.querySelector<HTMLInputElement>('input')?.focus();
+      };
+
+      const close = () => dialog.close();
+
+      openButton.addEventListener('click', open, { signal: controller.signal });
+      closeButton.addEventListener('click', close, { signal: controller.signal });
+      dialog.addEventListener('close', () => {
+        document.body.toggleAttribute('data-search-modal-open', false);
+      }, { signal: controller.signal });
+      dialog.addEventListener('click', (event) => {
+        if (!panel.contains(event.target as Node)) close();
+      }, { signal: controller.signal });
+      window.addEventListener('keydown', (event) => {
+        if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+          event.preventDefault();
+          dialog.open ? close() : open();
+        }
+      }, { signal: controller.signal });
+    }
+
+    disconnectedCallback() {
+      this.abortController?.abort();
+    }
+
+    async mountSearch() {
+      const mount = this.querySelector<HTMLElement>('[data-search-mount]');
+      if (!mount || this.initialized) return;
+
+      if (this.dataset.dev === 'true') {
+        mount.innerHTML = '<p class="site-search__dev">搜索索引会在生产构建后启用。</p>';
+        this.initialized = true;
+        return;
+      }
+
+      mount.id = 'site-pagefind-search';
+      await this.loadPagefind();
+      new window.PagefindUI({
+        element: '#site-pagefind-search',
+        bundlePath: '/pagefind/',
+        showImages: false,
+        showSubResults: true,
+      });
+      this.initialized = true;
+    }
+
+    loadPagefind() {
+      if (window.PagefindUI) return Promise.resolve();
+
+      return new Promise<void>((resolve, reject) => {
+        const existingLink = document.querySelector('link[data-pagefind-ui]');
+        if (!existingLink) {
+          const link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = '/pagefind/pagefind-ui.css';
+          link.dataset.pagefindUi = 'true';
+          document.head.append(link);
+        }
+
+        const existingScript = document.querySelector<HTMLScriptElement>('script[data-pagefind-ui]');
+        if (existingScript) {
+          existingScript.addEventListener('load', () => resolve(), { once: true });
+          existingScript.addEventListener('error', reject, { once: true });
+          return;
+        }
+
+        const script = document.createElement('script');
+        script.src = '/pagefind/pagefind-ui.js';
+        script.dataset.pagefindUi = 'true';
+        script.addEventListener('load', () => resolve(), { once: true });
+        script.addEventListener('error', reject, { once: true });
+        document.head.append(script);
+      });
+    }
+  }
+
+  if (!customElements.get('site-search-box')) {
+    customElements.define('site-search-box', SiteSearchBox);
+  }
+</script>
