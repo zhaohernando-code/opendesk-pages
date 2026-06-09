@@ -17,8 +17,10 @@ docs:
     children:
       - title: "Opendesk Cli"
         url: /docs/quickstart/cli
-      - title: "Opendesk Desktop (桌面版)"
+      - title: "Opendesk Desktop"
         url: /docs/quickstart/desktop
+      - title: "Opendesk Desktop 鸿蒙PC专属指南"
+        url: /docs/quickstart/desktop-hmpc
 
   - title: "进阶场景"
     children:
@@ -29,7 +31,7 @@ docs:
     children:
       - title: "Opendesk Cli"
         url: /docs/manual/cli/
-      - title: "Opendesk Desktop (桌面版)"
+      - title: "Opendesk Desktop"
         url: /docs/desktop/
 
   - title: "开发者指南"

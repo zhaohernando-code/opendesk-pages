@@ -1,7 +1,7 @@
 ---
 layout: single
 toc: true
-title:  2026.6.04 日构建更新
+title:  2026.6.4 日构建更新
 date:   2026-06-04 09:00:00 +0800
 classes: no-sidebar
 categories: nightly-release
