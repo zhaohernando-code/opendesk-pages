@@ -44,3 +44,7 @@ docs:
         url: /docs/contribute/cli
       - title: "Opendesk Desktop 开发上手"
         url: /docs/contribute/desktop
+      - title: "官网技术栈迁移方案"
+        url: /docs/contribute/astro-starlight-mdx-migration
+      - title: "Astro 迁移 Phase 0 盘点"
+        url: /docs/contribute/astro-migration-phase-0-inventory
