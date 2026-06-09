@@ -1,0 +1,36 @@
+---
+interface Props {
+  windows?: string;
+  macos?: string;
+  linux?: string;
+}
+
+const { windows = '', macos = '', linux = '' } = Astro.props;
+const tabs = [
+  { id: 'windows', label: 'Windows', content: windows },
+  { id: 'macos', label: 'macOS', content: macos },
+  { id: 'linux', label: 'Linux', content: linux },
+];
+---
+
+<div class="platform-tabs" data-platform-tabs>
+  <div class="platform-tabs__buttons">
+    {tabs.map((tab, index) => <button type="button" class:list={{ active: index === 0 }} data-tab={tab.id}>{tab.label}</button>)}
+  </div>
+  {tabs.map((tab, index) => <div class:list={{ 'platform-tabs__panel': true, active: index === 0 }} data-panel={tab.id}>{tab.content}</div>)}
+</div>
+
+<script>
+  document.querySelectorAll('[data-platform-tabs]').forEach((container) => {
+    const buttons = Array.from(container.querySelectorAll('[data-tab]'));
+    const panels = Array.from(container.querySelectorAll('[data-panel]'));
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const tab = button.getAttribute('data-tab');
+        buttons.forEach((item) => item.classList.toggle('active', item === button));
+        panels.forEach((panel) => panel.classList.toggle('active', panel.getAttribute('data-panel') === tab));
+      });
+    });
+  });
+</script>

@@ -1,0 +1,21 @@
+---
+import { site } from '../config/site';
+---
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-brand" href="/" aria-label="OpenDesk">
+      <img src="/assets/images/cli-logo.png" alt="" width="28" height="28" />
+      <span>{site.title}</span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      {
+        site.nav.map((item) => (
+          <a href={item.href} target={item.external ? '_blank' : undefined} rel={item.external ? 'noreferrer' : undefined}>
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>

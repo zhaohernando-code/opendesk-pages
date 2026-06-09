@@ -15,7 +15,7 @@ toc: true
 | 状态 | Completed |
 | 完成日期 | 2026-06-09 |
 | 产物范围 | URL 映射、导航缺口、尾斜杠策略、Jekyll 专有语法、资源清点、回退方案 |
-| 后续阶段 | Phase 1：Astro/Starlight 基础工程 |
+| 后续阶段 | Phase 1：Astro/Starlight 基础工程，已完成 |
 
 本文档记录 OpenDesk 官网从 Jekyll 迁移到 Astro + Starlight + MDX 前的基线盘点。Phase 1 开始前，应以本文档作为路径兼容和内容迁移的输入。
 
@@ -44,20 +44,20 @@ toc: true
 | `/channels/feishu` | `pages/channels/feishu.md` | `src/pages/channels/feishu.mdx` | Phase 4 迁移 |
 | `/channels/weixin` | `pages/channels/weixin.md` | `src/pages/channels/weixin.mdx` | Phase 4 迁移 |
 | `/news` | `pages/news.md` + `_posts/release_notes/*.md` | `src/pages/news.astro` + content collection | 需要替换 Liquid 列表 |
-| `/docs/` | `pages/docs/index.md` | `src/content/docs/index.mdx` | Phase 3 迁移 |
-| `/docs/quickstart/` | `pages/docs/quickstart/index.md` | `src/content/docs/quickstart/index.mdx` | Phase 3 迁移 |
-| `/docs/quickstart/cli` | `pages/docs/quickstart/cli.md` | `src/content/docs/quickstart/cli.mdx` | Phase 3 迁移 |
-| `/docs/quickstart/desktop` | `pages/docs/quickstart/desktop.md` | `src/content/docs/quickstart/desktop.mdx` | Phase 3 迁移 |
-| `/docs/manual/cli` | `pages/docs/manual/cli.md` | `src/content/docs/manual/cli.mdx` | Phase 3 迁移 |
-| `/docs/plugins/` | 当前仅导航入口 | `src/content/docs/plugins/index.mdx` | Phase 1 建占位页，Phase 3 补正式内容 |
-| `/docs/desktop/` | 当前仅导航入口 | `src/content/docs/desktop/index.mdx` | Phase 1 建占位页，Phase 3 补正式内容 |
-| `/docs/contribute/` | `pages/docs/contribute/index.md` | `src/content/docs/contribute/index.mdx` | Phase 3 迁移 |
-| `/docs/contribute/architecture` | `pages/docs/contribute/architecture.md` | `src/content/docs/contribute/architecture.mdx` | Phase 3 迁移 |
-| `/docs/contribute/prepare` | `pages/docs/contribute/prepare.md` | `src/content/docs/contribute/prepare.mdx` | Phase 3 迁移，需替换 platform tabs |
-| `/docs/contribute/cli` | `pages/docs/contribute/cli.md` | `src/content/docs/contribute/cli.mdx` | Phase 3 迁移 |
-| `/docs/contribute/desktop` | `pages/docs/contribute/desktop.md` | `src/content/docs/contribute/desktop.mdx` | Phase 3 迁移 |
-| `/docs/contribute/astro-starlight-mdx-migration` | `pages/docs/contribute/astro-starlight-mdx-migration.md` | `src/content/docs/contribute/astro-starlight-mdx-migration.mdx` | Phase 3 迁移 |
-| `/docs/contribute/astro-migration-phase-0-inventory` | 本文档 | `src/content/docs/contribute/astro-migration-phase-0-inventory.mdx` | Phase 3 迁移 |
+| `/docs/` | `pages/docs/index.md` | `src/content/docs/docs/index.mdx` | Phase 3 迁移；第二层 `docs/` 保留 `/docs/**` URL |
+| `/docs/quickstart/` | `pages/docs/quickstart/index.md` | `src/content/docs/docs/quickstart/index.mdx` | Phase 3 迁移 |
+| `/docs/quickstart/cli` | `pages/docs/quickstart/cli.md` | `src/content/docs/docs/quickstart/cli.mdx` | Phase 3 迁移 |
+| `/docs/quickstart/desktop` | `pages/docs/quickstart/desktop.md` | `src/content/docs/docs/quickstart/desktop.mdx` | Phase 3 迁移 |
+| `/docs/manual/cli` | `pages/docs/manual/cli.md` | `src/content/docs/docs/manual/cli.mdx` | Phase 3 迁移 |
+| `/docs/plugins/` | 当前仅导航入口 | `src/content/docs/docs/plugins/index.mdx` | Phase 1 已建占位页，Phase 3 补正式内容 |
+| `/docs/desktop/` | 当前仅导航入口 | `src/content/docs/docs/desktop/index.mdx` | Phase 1 已建占位页，Phase 3 补正式内容 |
+| `/docs/contribute/` | `pages/docs/contribute/index.md` | `src/content/docs/docs/contribute/index.mdx` | Phase 3 迁移 |
+| `/docs/contribute/architecture` | `pages/docs/contribute/architecture.md` | `src/content/docs/docs/contribute/architecture.mdx` | Phase 3 迁移 |
+| `/docs/contribute/prepare` | `pages/docs/contribute/prepare.md` | `src/content/docs/docs/contribute/prepare.mdx` | Phase 3 迁移，需替换 platform tabs |
+| `/docs/contribute/cli` | `pages/docs/contribute/cli.md` | `src/content/docs/docs/contribute/cli.mdx` | Phase 3 迁移 |
+| `/docs/contribute/desktop` | `pages/docs/contribute/desktop.md` | `src/content/docs/docs/contribute/desktop.mdx` | Phase 3 迁移 |
+| `/docs/contribute/astro-starlight-mdx-migration` | `pages/docs/contribute/astro-starlight-mdx-migration.md` | `src/content/docs/docs/contribute/astro-starlight-mdx-migration.mdx` | Phase 3 迁移 |
+| `/docs/contribute/astro-migration-phase-0-inventory` | 本文档 | `src/content/docs/docs/contribute/astro-migration-phase-0-inventory.mdx` | Phase 3 迁移 |
 
 ## 导航缺口
 
@@ -65,8 +65,8 @@ toc: true
 
 | 导航 URL | 导航位置 | 处理建议 |
 | --- | --- | --- |
-| `/docs/plugins/` | 文档中心 > 进阶场景 > 插件使用 | Phase 1 建 `src/content/docs/plugins/index.mdx` 占位页，Phase 3 补正式内容 |
-| `/docs/desktop/` | 文档中心 > 完整使用手册 > Opendesk Desktop | Phase 1 建 `src/content/docs/desktop/index.mdx` 占位页，Phase 3 补正式 Desktop 手册内容 |
+| `/docs/plugins/` | 文档中心 > 进阶场景 > 插件使用 | Phase 1 已建 `src/content/docs/docs/plugins/index.mdx` 占位页，Phase 3 补正式内容 |
+| `/docs/desktop/` | 文档中心 > 完整使用手册 > Opendesk Desktop | Phase 1 已建 `src/content/docs/docs/desktop/index.mdx` 占位页，Phase 3 补正式 Desktop 手册内容 |
 
 主导航中的 `https://matrix.openharmony.cn/#/skillSquare` 是外链，Astro/Starlight 配置时必须继续按外链处理。
 
@@ -80,6 +80,9 @@ toc: true
 2. 对已有导航路径保留当前写法；对同一页面的另一种写法建立 redirect 或等价可访问路径。
 3. 文档正文新增链接时优先使用无尾斜杠的页面路径，目录页保留尾斜杠，例如 `/docs/`、`/docs/quickstart/`。
 4. Phase 5 切流前用主要 URL 清单同时验证带尾斜杠和不带尾斜杠访问。
+5. 最终 canonical URL 采用“普通内容页无尾斜杠、目录索引页保留尾斜杠”的规则；另一种写法通过平台 redirect 或等价页面兼容。
+
+`astro.config.mjs` 不设置 `base`，生产站点从域名根路径发布；Starlight 的 `/docs/**` 路由由 `src/content/docs/docs/**` 目录层级产生。
 
 ## Jekyll 专有语法扫描
 
@@ -135,7 +138,7 @@ toc: true
 
 ## 部署与回退基线
 
-Phase 1 到 Phase 4 期间，当前 Jekyll 站点保持可构建状态。每个阶段提交前至少验证：
+Phase 1 到 Phase 4 期间，当前 Jekyll 站点只作为迁移期临时回退基线。每个阶段提交前可验证：
 
 ```bash
 bundle exec jekyll build
@@ -144,7 +147,7 @@ bundle exec jekyll build
 Astro 工程初始化后，每个阶段提交前同时验证：
 
 ```bash
-npm run build
+corepack pnpm build
 ```
 
 回退策略：
@@ -153,14 +156,26 @@ npm run build
 2. 切流前保留 Jekyll 版本的最后一个 commit 或 tag。
 3. Cloudflare Pages 切流时先使用 preview 环境验证主要 URL。
 4. 如果切流后出现大量 404 或构建失败，Cloudflare Pages 回滚到上一部署；GitHub Pages 方案则切回旧发布分支。
+5. Astro 版本完成内容、路由、部署验证后，主线删除 Jekyll/Ruby 构建入口；旧 Jekyll 站点只保留在 tag/分支中，不在主线长期共存。
 
 ## Phase 1 输入
 
 Phase 1 初始化 Astro/Starlight 时必须先满足：
 
-1. `package.json`、`astro.config.mjs` 和 `src/**` 与当前 Jekyll 文件共存，不删除 Jekyll 入口。
+1. `package.json`、`astro.config.mjs` 和 `src/**` 与当前 Jekyll 文件迁移期临时共存；最终切流阶段删除 Jekyll 入口。
 2. Starlight 文档根路径必须验证为 `/docs/**`。
-3. 先补 `src/content/docs/plugins/index.mdx` 和 `src/content/docs/desktop/index.mdx` 占位页，避免导航 404。
+3. 先补 `src/content/docs/docs/plugins/index.mdx` 和 `src/content/docs/docs/desktop/index.mdx` 占位页，避免导航 404。
 4. 先建立 `SiteFooter`、`PlatformTabs`、基础页面壳层等组件目录，后续再迁具体内容。
 5. 保留当前 `assets/**` 路径，等 Astro 预览稳定后再做资源迁移。
 6. 创建 `src/content/release-notes/` 内容集合位置，Phase 3 再迁 19 篇 release notes。
+
+Phase 1 实际落地记录：
+
+- Node 使用 `.nvmrc` 固定为 22.16.0；
+- Astro 工程使用 pnpm 11.5.2，lockfile 为 `pnpm-lock.yaml`；
+- `pnpm-workspace.yaml` 已允许 `esbuild` 和 `sharp` 的构建脚本；
+- Starlight 文档内容放在 `src/content/docs/docs/**`，用于发布到 `/docs/**`；
+- 站点级 404 由 `src/pages/404.astro` 输出为 `dist/404.html`，Starlight 内置 404 已禁用以避免路由冲突；
+- Jekyll `_config.yml` 已排除 Astro 工程目录和 Node 构建产物，避免迁移期互相扫描；
+- `corepack pnpm build` 已通过，生成 23 个页面、Pagefind 搜索索引和 sitemap；
+- Jekyll 构建可作为迁移期回退检查，但不作为最终主线要求。

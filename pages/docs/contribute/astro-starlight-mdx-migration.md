@@ -15,11 +15,12 @@ toc: true
 | 设计基线 | 已有首页 HTML 设计稿：`design-drafts/homepage-v1.html` |
 | 技术栈决策 | 倾向采用 Astro + Starlight + MDX |
 | 迁移准备 | Completed：[Phase 0 盘点](/docs/contribute/astro-migration-phase-0-inventory) |
-| 代码迁移 | Not Started |
+| 基础工程 | Completed：Astro/Starlight/MDX 工程已初始化 |
+| 代码迁移 | Phase 1 Completed，内容迁移 Not Started |
 | 自动部署 | Not Started |
-| 外部审核 | Completed：Claude + DeepSeek 已审核，P0/P1 建议已吸收 |
+| 外部审核 | Completed：Phase 1 已完成 Claude + DeepSeek 收口审核，无遗留 P0/P1 |
 
-本文档用于指导 OpenDesk 官网从当前 Jekyll 站点迁移到 Astro + Starlight + MDX。当前 Jekyll 站点仍作为线上内容和迁移基线；迁移完成前，不直接替换线上发布链路。
+本文档用于指导 OpenDesk 官网从当前 Jekyll 站点迁移到 Astro + Starlight + MDX。当前 Jekyll 站点只作为迁移期的线上内容和回退基线；Astro 版本完成并验证后，应删除 Jekyll/Ruby 构建入口，不长期维护双构建系统。
 
 ## 背景
 
@@ -48,12 +49,14 @@ toc: true
 4. 文档中心具备目录、侧边栏、搜索、代码高亮等基础能力。
 5. 首页、使用场景页和渠道页允许使用自定义组件。
 6. GitHub 变更后自动构建并部署。
+7. Astro 版本完成验证后，清理 Jekyll 主题、Ruby 依赖和旧内容入口，主线只保留新站点。
 
 ## 非目标
 
 - 不在第一阶段引入登录、服务端 API、用户控制台或动态数据库。
 - 不在迁移初期重写全部文档内容。
-- 不把当前 Jekyll 站点一次性删除；迁移期间保留可回退版本。
+- 不在 Astro 内容、路由和部署未验证前删除当前 Jekyll 站点。
+- 不长期保留 Jekyll + Astro 双构建；共存只服务于迁移期验证和回退。
 - 不把最终视觉完全绑定到临时 HTML 设计稿；设计稿只作为首版风格基线。
 
 ## 推荐技术栈
@@ -79,6 +82,9 @@ toc: true
 opendesk-pages/
   astro.config.mjs
   package.json
+  pnpm-lock.yaml
+  pnpm-workspace.yaml
+  .nvmrc
   src/
     assets/
       images/
@@ -93,25 +99,26 @@ opendesk-pages/
       site.ts
     content/
       docs/
-        index.mdx
-        quickstart/
+        docs/
           index.mdx
-          cli.mdx
-          desktop.mdx
-        desktop/
-          index.mdx
-        manual/
-          cli.mdx
-        contribute/
-          index.mdx
-          architecture.mdx
-          prepare.mdx
-          cli.mdx
-          desktop.mdx
-          astro-starlight-mdx-migration.mdx
-          astro-migration-phase-0-inventory.mdx
-        plugins/
-          index.mdx
+          quickstart/
+            index.mdx
+            cli.mdx
+            desktop.mdx
+          desktop/
+            index.mdx
+          manual/
+            cli.mdx
+          contribute/
+            index.mdx
+            architecture.mdx
+            prepare.mdx
+            cli.mdx
+            desktop.mdx
+            astro-starlight-mdx-migration.mdx
+            astro-migration-phase-0-inventory.mdx
+          plugins/
+            index.mdx
       release-notes/
         2026-06-04-nightly-release.md
     pages/
@@ -137,17 +144,17 @@ opendesk-pages/
 | 当前 Jekyll 路径 | 目标 Astro/Starlight 路径 | 处理方式 |
 | --- | --- | --- |
 | `index.md` | `src/pages/index.astro` | 使用当前首页 HTML 稿重写为 Astro 组件 |
-| `pages/docs/index.md` | `src/content/docs/index.mdx` | 迁入 Starlight 文档 |
-| `pages/docs/quickstart/*.md` | `src/content/docs/quickstart/*.mdx` | 保留正文，逐步组件化安装步骤 |
-| `pages/docs/manual/cli.md` | `src/content/docs/manual/cli.mdx` | 迁入文档树 |
-| 导航占位：`/docs/desktop/` | `src/content/docs/desktop/index.mdx` | Phase 1 先建占位页，Phase 3 补正式 Desktop 手册内容 |
-| 导航占位：`/docs/plugins/` | `src/content/docs/plugins/index.mdx` | Phase 1 先建占位页，Phase 3 补正式插件文档 |
-| `pages/docs/contribute/architecture.md` | `src/content/docs/contribute/architecture.mdx` | 迁入文档树 |
-| `pages/docs/contribute/prepare.md` | `src/content/docs/contribute/prepare.mdx` | 迁入文档树 |
-| `pages/docs/contribute/cli.md` | `src/content/docs/contribute/cli.mdx` | 迁入文档树 |
-| `pages/docs/contribute/desktop.md` | `src/content/docs/contribute/desktop.mdx` | 迁入文档树 |
-| `pages/docs/contribute/astro-starlight-mdx-migration.md` | `src/content/docs/contribute/astro-starlight-mdx-migration.mdx` | 迁入文档树 |
-| `pages/docs/contribute/astro-migration-phase-0-inventory.md` | `src/content/docs/contribute/astro-migration-phase-0-inventory.mdx` | 迁入文档树 |
+| `pages/docs/index.md` | `src/content/docs/docs/index.mdx` | 迁入 Starlight 文档；第二层 `docs/` 用于保留 `/docs/**` URL |
+| `pages/docs/quickstart/*.md` | `src/content/docs/docs/quickstart/*.mdx` | 保留正文，逐步组件化安装步骤 |
+| `pages/docs/manual/cli.md` | `src/content/docs/docs/manual/cli.mdx` | 迁入文档树 |
+| 导航占位：`/docs/desktop/` | `src/content/docs/docs/desktop/index.mdx` | Phase 1 已建占位页，Phase 3 补正式 Desktop 手册内容 |
+| 导航占位：`/docs/plugins/` | `src/content/docs/docs/plugins/index.mdx` | Phase 1 已建占位页，Phase 3 补正式插件文档 |
+| `pages/docs/contribute/architecture.md` | `src/content/docs/docs/contribute/architecture.mdx` | 迁入文档树 |
+| `pages/docs/contribute/prepare.md` | `src/content/docs/docs/contribute/prepare.mdx` | 迁入文档树 |
+| `pages/docs/contribute/cli.md` | `src/content/docs/docs/contribute/cli.mdx` | 迁入文档树 |
+| `pages/docs/contribute/desktop.md` | `src/content/docs/docs/contribute/desktop.mdx` | 迁入文档树 |
+| `pages/docs/contribute/astro-starlight-mdx-migration.md` | `src/content/docs/docs/contribute/astro-starlight-mdx-migration.mdx` | 迁入文档树 |
+| `pages/docs/contribute/astro-migration-phase-0-inventory.md` | `src/content/docs/docs/contribute/astro-migration-phase-0-inventory.mdx` | 迁入文档树 |
 | `pages/about.md` | `src/pages/about.mdx` | 独立页面迁移，不进入 Starlight 文档树 |
 | `pages/gallery.md` | `src/pages/gallery.astro` | 使用自定义场景页组件 |
 | `pages/usecases/*.md` | `src/pages/gallery/*.mdx` | 作为场景详情页 |
@@ -162,6 +169,9 @@ opendesk-pages/
 - 内部链接优先沿用当前公开 URL；对同一页面的带尾斜杠和不带尾斜杠版本必须建立兼容。
 - Astro 初始化时先配置 `trailingSlash: "ignore"`，并为已知旧路径补 redirects 或等价页面，避免 Jekyll 到 Astro 切换后出现路径级 404。
 - 文档中若出现旧锚点链接，迁移时必须先保留旧锚点或建立锚点映射，再删除 Kramdown 属性语法。
+- Starlight 官方要求文档内容位于 `src/content/docs/`；若要让所有文档页面位于 `/docs/**` 子路径，需要将内容放入 `src/content/docs/docs/`。
+- `astro.config.mjs` 不设置 `base`，生产站点从域名根路径发布；`/docs/**` 由 Starlight 内容目录 `src/content/docs/docs/**` 产生，不通过 `base: "/docs"` 实现。
+- Phase 5 切流时采用明确的 canonical URL：普通内容页优先使用无尾斜杠路径，目录索引页保留尾斜杠，例如 `/docs/`、`/docs/quickstart/`；另一种写法通过平台 redirect 或等价页面兼容。
 
 ## 首页落地原则
 
@@ -189,10 +199,13 @@ opendesk-pages/
 建议配置：
 
 ```text
-Build command: npm run build
+Install command: corepack enable && pnpm install --frozen-lockfile
+Build command: pnpm build
 Build output: dist
-Node version: 跟随项目 .nvmrc 或 Cloudflare Pages 配置
+Node version: 22.16.0，跟随项目 .nvmrc 或 Cloudflare Pages 配置
 ```
+
+`pnpm-workspace.yaml` 需要显式允许 `esbuild` 和 `sharp` 的构建脚本，避免 pnpm 默认阻止依赖 native build 后影响 Astro 构建。
 
 ### GitHub Pages 备选
 
@@ -221,24 +234,26 @@ Node version: 跟随项目 .nvmrc 或 Cloudflare Pages 配置
 
 ### Phase 1：Astro/Starlight 基础工程
 
-状态：Todo
+状态：Completed
 
-- 初始化 Astro + Starlight；
-- 配置站点标题、favicon、导航、侧边栏；
-- 接入 MDX；
-- 建立基础组件目录；
-- 明确迁移共存策略：推荐使用独立迁移分支；如需同分支共存，则在 CI 中显式区分 Jekyll 和 Astro 构建入口；
-- 配置文档搜索、404 页面和 sitemap；
-- 评估 `assets/javascripts/copy-button.js` 是否需要迁移；若 Starlight 已覆盖复制按钮能力，则记录为不迁移；
-- 保持当前 Jekyll 站点不被破坏。
+- 已初始化 Astro + Starlight + MDX；
+- 已配置站点标题、favicon、导航、侧边栏；
+- 已用 `src/content/docs/docs/**` 验证 Starlight `/docs/**` 子路径策略；
+- 已建立基础组件目录；
+- 已使用 `.nvmrc` 固定 Node 22.16.0，使用 pnpm 作为 Astro 工程包管理器；
+- 已配置文档搜索、404 页面和 sitemap；
+- `astro.config.mjs` 禁用 Starlight 内置 404，改由 `src/pages/404.astro` 生成站点级 `dist/404.html`，避免与自定义页面冲突；
+- `assets/javascripts/copy-button.js` 暂不迁移，Starlight 代码块能力已覆盖基础复制体验；
+- 已在 Jekyll `_config.yml` 中排除 `src`、`public`、`dist`、`node_modules` 和 Astro 配置文件，避免 Jekyll 解析 `.astro` front matter；
+- 当前 Jekyll 站点在迁移期临时保持可构建，用于当前线上回退；这不是最终状态，Phase 5 必须删除 Jekyll/Ruby 构建入口。
 
 验收标准：
 
-- `npm run build` 成功；
-- Jekyll 当前构建命令仍可在迁移前基线分支成功执行；
-- Starlight 文档首页可访问；
-- 首页、文档、场景页的基础路由可访问。
-- 搜索、404 和 sitemap 有明确实现，或有记录说明暂缓。
+- `pnpm build` 成功；
+- Jekyll 当前构建命令在迁移期仍可成功执行，作为回退检查，不作为最终主线要求；
+- Starlight 文档首页可访问于 `/docs/`；
+- 首页、文档、场景页的基础路由可访问；
+- 搜索、`dist/404.html` 和 sitemap 已有实现。
 
 ### Phase 2：首页组件化
 
@@ -302,7 +317,9 @@ Node version: 跟随项目 .nvmrc 或 Cloudflare Pages 配置
 - 设置预览环境；
 - Cloudflare Pages 方案下使用分支预览或 `*.pages.dev` 预览环境；
 - 配置生产域名；
-- 保留 Jekyll 版本作为回退分支或 tag；
+- 在切流前保留 Jekyll 版本作为回退分支或 tag；
+- 删除 Jekyll 主线入口：`Gemfile`、`_config.yml`、`_data/`、`_includes/`、`_posts/`、旧 `pages/`、根 `index.md`、Jekyll `assets` 中已迁移的重复资源，以及 Ruby 构建产物配置；
+- 确认仓库主线只执行 Astro 构建，不再执行 Jekyll 构建；
 - 切流后观察 404、缓存和静态资源路径。
 
 验收标准：
@@ -311,6 +328,7 @@ Node version: 跟随项目 .nvmrc 或 Cloudflare Pages 配置
 - 生产域名可访问；
 - 主要 URL 没有意外 404；
 - 已演练回退：Cloudflare Pages 回滚到上一个部署，或 GitHub Pages 切回旧发布分支；
+- Jekyll/Ruby 构建入口已从主线移除，旧版本仅存在于 tag/分支中；
 - 可在 30 分钟内回退到旧版本。
 
 ## 风险与对策
@@ -318,7 +336,7 @@ Node version: 跟随项目 .nvmrc 或 Cloudflare Pages 配置
 | 风险 | 影响 | 对策 |
 | --- | --- | --- |
 | 旧 URL 失效 | 搜索、外链、文档引用失效 | 保留 permalink 或配置 redirects |
-| 同仓库双构建系统冲突 | Cloudflare Pages 或 GitHub Actions 可能执行错误构建命令 | 迁移期使用独立分支；CI 中显式区分 Jekyll 和 Astro 构建入口 |
+| 迁移期双构建系统冲突 | Cloudflare Pages 或 GitHub Actions 可能执行错误构建命令 | 迁移期使用独立分支；CI 中显式执行 Astro 构建；切流后删除 Jekyll 入口 |
 | Jekyll/Liquid/Markdown 语法不兼容 | MDX 构建失败或内容丢失 | Phase 0 扫描 Liquid、include、Kramdown 属性和专有 front matter |
 | Starlight 路由前缀不一致 | `/docs/**` 路径变更导致 404 | Phase 1 验证 `/docs` 前缀策略，并配置 redirects |
 | 首页动效过重 | 移动端卡顿或滚动不稳定 | 桌面增强，移动端自然流降级 |
@@ -337,11 +355,13 @@ Node version: 跟随项目 .nvmrc 或 Cloudflare Pages 配置
 | 2026-06-09 | 首页视觉以 `design-drafts/homepage-v1.html` 为首版模板 | Accepted |
 | 2026-06-09 | 自动部署优先考虑 Cloudflare Pages，GitHub Pages 作为备选 | Preferred |
 | 2026-06-09 | Claude + DeepSeek 审核指出路径映射、双构建、Liquid/MDX、URL 兼容风险；本文档已吸收 P0/P1 建议 | Completed |
+| 2026-06-09 | Phase 1 使用 `src/content/docs/docs/**` 保留 `/docs/**` 路由，包管理器采用 pnpm，Node 固定为 22.16.0 | Completed |
+| 2026-06-09 | 明确双构建只作为迁移期防护；Astro 验证和切流后，主线删除 Jekyll/Ruby 构建入口 | Accepted |
 
 ## 下一步
 
-1. 初始化 Astro/Starlight 基础工程；
-2. 配置 `/docs/**` 路径、站点导航、侧边栏、搜索、404 和 sitemap；
-3. 先补齐 `/docs/plugins/` 与 `/docs/desktop/` 占位页，避免当前导航 404；
-4. 验证 Jekyll 与 Astro 双构建在迁移分支中共存；
-5. 通过外部审核后提交 Phase 1，再进入首页组件化。
+1. 使用当前 `design-drafts/homepage-v1.html` 进入 Phase 2 首页组件化；
+2. 将首页拆分为 `HeroSection`、`WorkflowSection`、`ChannelSection`、`GallerySection`、`CliSection` 和 `SiteFooter`；
+3. 保留桌面整页滚动体验，半屏和移动端使用自然流式布局；
+4. 建立桌面、半屏、手机视口的视觉验证；
+5. Phase 2 审核通过后再提交。

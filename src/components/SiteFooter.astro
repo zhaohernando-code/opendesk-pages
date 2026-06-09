@@ -1,0 +1,12 @@
+---
+import { site } from '../config/site';
+---
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div>{site.copyright}</div>
+    <div class="site-footer__links">
+      {site.footerLinks.map((link) => <a href={link.href}>{link.label}</a>)}
+    </div>
+  </div>
+</footer>

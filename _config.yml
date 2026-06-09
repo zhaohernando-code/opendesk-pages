@@ -18,13 +18,12 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: ""
+title: "OpenDesk"
 logo: "/assets/images/cli-logo.png"
-email: liyi.fm@foxmail.com
+email: ""
 description: >- # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  OpenDesk turns natural-language instructions into desktop workflows
+  that can run across apps, files, and remote channels.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  uv0xab
@@ -35,6 +34,18 @@ minimal_mistakes_skin: "dirt"
 plugins:
   - jekyll-feed
 
+exclude:
+  - src
+  - public
+  - dist
+  - node_modules
+  - .astro
+  - astro.config.mjs
+  - package.json
+  - pnpm-lock.yaml
+  - pnpm-workspace.yaml
+  - tsconfig.json
+
 # Defaults
 defaults:
   - scope:
@@ -43,7 +54,7 @@ defaults:
     values:
       sidebar: false
 
-copyright: "© 2026 The OpenDesk Team, All Right Reserved, Powered by Jekyll & Minimal Mistakes"
+copyright: "© 2026 The OpenDesk Team, All Rights Reserved"
 
 footer:
   links:
@@ -55,10 +66,10 @@ footer:
       url: "https://gitcode.com/openharmony-robot/OpenDesk"
 
 author:
-  name             : "Your Name"
+  name             : "OpenDesk Team"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I am an **amazing** person."
-  location         : "Somewhere"
+  bio              : "OpenDesk project documentation."
+  location         : ""
   email            :
   links:
     - label: "Email"

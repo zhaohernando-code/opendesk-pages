@@ -1,0 +1,12 @@
+---
+import CommandBlock from '../components/CommandBlock.astro';
+import SiteLayout from '../layouts/SiteLayout.astro';
+---
+
+<SiteLayout frontmatter={{ title: 'OpenDesk' }}>
+  <section class="hero">
+    <h1>OpenDesk</h1>
+    <p>Personal AI operator for desktop workflows. Astro 迁移工程已建立，首页视觉将在 Phase 2 按设计稿组件化。</p>
+    <CommandBlock command="npm i -g @bitclub.ai/opendesk-cli" />
+  </section>
+</SiteLayout>
