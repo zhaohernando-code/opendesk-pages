@@ -7,6 +7,8 @@ import '../styles/global.css';
 const { frontmatter = {} } = Astro.props;
 const title = frontmatter.title ? `${frontmatter.title} | ${site.title}` : site.title;
 const description = frontmatter.description ?? site.description;
+const variant = frontmatter.variant ?? 'default';
+const hideFooter = frontmatter.hideFooter ?? false;
 ---
 
 <!doctype html>
@@ -20,11 +22,11 @@ const description = frontmatter.description ?? site.description;
   </head>
   <body>
     <div class="site-shell">
-      <SiteHeader />
-      <main class="site-main">
+      <SiteHeader variant={variant} />
+      <main class:list={['site-main', variant === 'landing' && 'site-main--landing']}>
         <slot />
       </main>
-      <SiteFooter />
+      {!hideFooter && <SiteFooter />}
     </div>
   </body>
 </html>

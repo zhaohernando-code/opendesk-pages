@@ -1,0 +1,29 @@
+---
+const channels = [
+  ['Feishu', '扫码创建或绑定机器人，让移动端消息成为桌面工作入口。'],
+  ['Weixin', '复用微信插件生态，把日常对话交给 OpenDesk 回到电脑侧执行。'],
+  ['Desktop', '在桌面端观察状态、批准配对、升级 nightly，并持续运行。'],
+];
+---
+
+<section id="channels" class="home-section home-showcase snap-page">
+  <div class="home-showcase__copy">
+    <h2><span class="title-line">离开电脑</span><span class="title-line">也能安排电脑工作</span></h2>
+    <p>通过飞书、微信等渠道，你可以在手机上唤起 OpenDesk。它不只是回复消息，而是替你回到电脑环境里查找、处理和发送结果。</p>
+    <div class="home-channel-list">
+      {
+        channels.map(([name, body]) => (
+          <div class="home-channel-row">
+            <strong>{name}</strong>
+            <span>{body}</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+  <div class="home-phone-panel" aria-label="手机扫码连接飞书">
+    <div class="home-phone-shot">
+      <img src="/assets/images/channels/feishu/phone_scanning.png" alt="手机扫码连接飞书" />
+    </div>
+  </div>
+</section>

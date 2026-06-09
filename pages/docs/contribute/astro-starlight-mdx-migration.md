@@ -16,7 +16,8 @@ toc: true
 | 技术栈决策 | 倾向采用 Astro + Starlight + MDX |
 | 迁移准备 | Completed：[Phase 0 盘点](/docs/contribute/astro-migration-phase-0-inventory) |
 | 基础工程 | Completed：Astro/Starlight/MDX 工程已初始化 |
-| 代码迁移 | Phase 1 Completed，内容迁移 Not Started |
+| 首页组件化 | Completed：首版首页已迁入 Astro 组件 |
+| 代码迁移 | Phase 2 Completed，文档正文迁移 Not Started |
 | 自动部署 | Not Started |
 | 外部审核 | Completed：Phase 1 已完成 Claude + DeepSeek 收口审核，无遗留 P0/P1 |
 
@@ -257,12 +258,13 @@ Node version: 22.16.0，跟随项目 .nvmrc 或 Cloudflare Pages 配置
 
 ### Phase 2：首页组件化
 
-状态：Todo
+状态：Completed
 
-- 将 `homepage-v1.html` 拆分为 Astro 组件；
-- 保留桌面整页滚动体验；
-- 半屏和移动端使用自然流式布局；
-- 使用现有 OpenDesk logo、产品截图和演示素材；
+- 已将 `homepage-v1.html` 拆分为 Astro 组件：`HomeHero`、`WorkflowSection`、`ChannelsSection`、`GallerySection`、`CliSection` 和 `HomePager`；
+- 桌面端保留 JS 控制的整页滚动体验，避免触控板一次滚动连续翻多页；
+- 半屏和移动端使用自然流式布局，不启用滚动劫持；
+- 已使用现有 OpenDesk logo、产品截图、渠道截图和场景演示素材；
+- 首页使用 `SiteLayout` 的 landing 变体，隐藏通用页尾，并在最后一屏单独输出首页页尾；
 - 不引入全站重型前端状态库。
 
 验收标准：
@@ -270,7 +272,8 @@ Node version: 22.16.0，跟随项目 .nvmrc 或 Cloudflare Pages 配置
 - 桌面、半屏、手机视口无内容重叠；
 - 触控板滚动不会连续误翻多屏；
 - 安装命令、CTA、产品截图显示完整；
-- 建立 Lighthouse 基线，建议 Performance 不低于 80，CLS 不高于 0.1；若无法达到，必须记录原因和优化计划。
+- 已用本地浏览器检查 1440x900、1024x768、390x844 和 320x720 视口，没有发现横向溢出、关键模块重叠或控制台错误；
+- Lighthouse 基线留到 Phase 5 切流前执行，避免在内容和资源仍迁移时产生误导性指标。
 
 ### Phase 3：文档内容迁移
 
@@ -357,11 +360,12 @@ Node version: 22.16.0，跟随项目 .nvmrc 或 Cloudflare Pages 配置
 | 2026-06-09 | Claude + DeepSeek 审核指出路径映射、双构建、Liquid/MDX、URL 兼容风险；本文档已吸收 P0/P1 建议 | Completed |
 | 2026-06-09 | Phase 1 使用 `src/content/docs/docs/**` 保留 `/docs/**` 路由，包管理器采用 pnpm，Node 固定为 22.16.0 | Completed |
 | 2026-06-09 | 明确双构建只作为迁移期防护；Astro 验证和切流后，主线删除 Jekyll/Ruby 构建入口 | Accepted |
+| 2026-06-09 | Phase 2 首页使用 Astro 组件落地，桌面保留整页滚动，窄屏降级为自然流式布局 | Completed |
 
 ## 下一步
 
-1. 使用当前 `design-drafts/homepage-v1.html` 进入 Phase 2 首页组件化；
-2. 将首页拆分为 `HeroSection`、`WorkflowSection`、`ChannelSection`、`GallerySection`、`CliSection` 和 `SiteFooter`；
-3. 保留桌面整页滚动体验，半屏和移动端使用自然流式布局；
-4. 建立桌面、半屏、手机视口的视觉验证；
-5. Phase 2 审核通过后再提交。
+1. 进入 Phase 3 文档内容迁移；
+2. 迁移 quickstart、manual、contribute 正文；
+3. 将 release notes 迁入 `src/content/release-notes/`；
+4. 将平台切换和安装命令等重复结构改为 MDX 组件；
+5. Phase 3 审核通过后再提交。

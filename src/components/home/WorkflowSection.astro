@@ -1,0 +1,29 @@
+---
+const steps = [
+  ['01', '描述目标', '告诉 OpenDesk 你要连接飞书、整理目录、查找文件或准备开发环境。'],
+  ['02', '装配能力', '它按任务选择模型、插件、MCP 与 Skills，自动完成依赖安装和配置。'],
+  ['03', '交付结果', '任务结果可以回到桌面、终端、飞书、微信或你指定的文件系统位置。'],
+];
+---
+
+<section id="workflow" class="home-section snap-page">
+  <div class="home-section__body">
+    <div class="home-section__header">
+      <h2><span class="title-line">从一句话到一个</span><span class="title-line">可执行工作流</span></h2>
+      <p>OpenDesk 不把智能体限制在聊天窗口里。它可以读取本地上下文、调用插件、通过消息渠道持续工作，并把复杂配置过程变成自然语言交互。</p>
+    </div>
+    <div class="home-flow">
+      {
+        steps.map(([number, title, body]) => (
+          <article class="home-flow__step">
+            <span class="home-number">{number}</span>
+            <div>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

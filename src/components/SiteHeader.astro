@@ -1,16 +1,29 @@
 ---
 import { site } from '../config/site';
+
+interface Props {
+  variant?: 'default' | 'landing';
+}
+
+const { variant = 'default' } = Astro.props;
+const landingNav = [
+  { label: '工作流', href: '#workflow' },
+  { label: '渠道', href: '#channels' },
+  { label: '场景', href: '#gallery' },
+  { label: '开始使用', href: '/docs/quickstart/cli' },
+];
+const navItems = variant === 'landing' ? landingNav : site.nav;
 ---
 
-<header class="site-header">
+<header class:list={['site-header', variant === 'landing' && 'site-header--landing']}>
   <div class="site-header__inner">
     <a class="site-brand" href="/" aria-label="OpenDesk">
-      <img src="/assets/images/cli-logo.png" alt="" width="28" height="28" />
+      <img src="/assets/images/cli-logo.png" alt="" width={variant === 'landing' ? 184 : 120} height={variant === 'landing' ? 43 : 28} />
       <span>{site.title}</span>
     </a>
     <nav class="site-nav" aria-label="Main navigation">
       {
-        site.nav.map((item) => (
+        navItems.map((item) => (
           <a href={item.href} target={item.external ? '_blank' : undefined} rel={item.external ? 'noreferrer' : undefined}>
             {item.label}
           </a>

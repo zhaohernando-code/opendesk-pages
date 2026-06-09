@@ -5,6 +5,7 @@ import { defineConfig } from 'astro/config';
 
 export default defineConfig({
   site: 'https://opendesk.bitclub.ai',
+  // Production deploys at the domain root, so public assets intentionally use root-absolute URLs.
   trailingSlash: 'ignore',
   integrations: [
     starlight({
