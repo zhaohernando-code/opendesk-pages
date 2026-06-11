@@ -1,0 +1,88 @@
+diff --git a/pages/docs/manual/cli.md b/pages/docs/manual/cli.md
+index e898518..17e8256 100644
+--- a/pages/docs/manual/cli.md
++++ b/pages/docs/manual/cli.md
+@@ -4,18 +4,24 @@ title: OpenDesk CLI 用户指南
+ permalink: /docs/manual/cli/
+ sidebar:
+   nav: "docs"
+-toc: true
+-toc_label: 目录
+-toc_sticky: true
+-toc_min: 2
+-toc_max: 2
++toc: false
+ ---
+ 
+ # OpenDesk CLI 用户指南
+ 
+ **强大的 AI 工作台命令行工具** — 让 AI Agent 成为你最得力的工作助手
+ 
+-[快速开始](#快速开始) · [详细功能指南](#详细功能指南) · [常见问题](#常见问题)
++## 目录
++
++- [快速开始](#快速开始)
++- [命令行参数](#1-命令行参数详解)
++- [交互式 TUI](#2-交互式-tui-界面)
++- [斜杠命令](#3-斜杠命令详解)
++- [键盘快捷键](#4-键盘快捷键)
++- [任务与会话管理](#5-任务与会话管理)
++- [高级特性](#7-高级特性)
++- [参考速查表](#8-参考速查表)
++- [常见问题](#常见问题)
+ 
+ ---
+ 
+@@ -27,7 +33,7 @@ OpenDesk CLI 是 OpenDesk 的命令行版本，提供了基于终端的文本用
+ 
+ ## 快速开始
+ 
+-如果你还没有安装 OpenDesk，请先阅读[快速开始](/docs/quickstart/cli)指南，了解如何安装、配置和首次运行。
++如果你还没有安装 OpenDesk，请先阅读[快速开始]({{ '/docs/quickstart/cli' | relative_url }})指南，了解如何安装、配置和首次运行。
+ 
+ > 💡 **提示**：大部分配置可以通过自然语言对话完成，无需手动编辑配置文件。遇到问题时，直接告诉 AI "帮我配置 xxx" 即可。
+ 
+@@ -71,16 +77,7 @@ opendesk --model gpt-4
+ 
+ ## 详细功能指南
+ 
+-本指南涵盖以下主要内容：
+-
+-- **命令行参数详解** — 启动选项、子命令、参数配置
+-- **交互式 TUI 界面** — 界面布局、状态栏、输入功能
+-- **斜杠命令详解** — 常用命令、任务管理、导入导出、系统配置
+-- **键盘快捷键** — 全局快捷键、输入区域快捷键
+-- **任务与会话管理** — 任务状态、消息队列、上下文压缩
+-- **高级特性** — 无头模式、插件系统、工具管理、记忆系统、技能系统
+-- **参考速查表** — CLI 参数、快捷键、斜杠命令速查
+-- **常见问题** — 配置、运行、文件、使用问题解答
++下面按 CLI 的主要使用场景展开说明。
+ 
+ ---
+ 
+diff --git a/pages/docs/manual/desktop.md b/pages/docs/manual/desktop.md
+index 9fe0c7d..970d687 100644
+--- a/pages/docs/manual/desktop.md
++++ b/pages/docs/manual/desktop.md
+@@ -70,13 +70,13 @@ OpenDesk Desktop 是一款桌面应用程序，为用户提供直观的图形界
+ 
+ | 主题 | 说明 |
+ |------|------|
+-| [快速开始](/docs/manual/quickstart/) | 5 分钟上手，完成第一个任务 |
+-| [功能指南](/docs/manual/tools/) | 详细了解各项能力与使用方法 |
+-| [技能系统](/docs/manual/skills/) | 技能生态：邮件、日程、笔记、浏览器等扩展能力 |
+-| [使用案例](/docs/manual/use-cases/) | 实际场景示例，看看别人怎么用 |
+-| [最佳实践](/docs/manual/best-practices/) | 效率技巧与经验总结 |
+-| [常见问题](/docs/manual/faq/) | 疑问解答 |
++| [快速开始]({{ '/docs/manual/quickstart/' | relative_url }}) | 5 分钟上手，完成第一个任务 |
++| [功能指南]({{ '/docs/manual/tools/' | relative_url }}) | 详细了解各项能力与使用方法 |
++| [技能系统]({{ '/docs/manual/skills/' | relative_url }}) | 技能生态：邮件、日程、笔记、浏览器等扩展能力 |
++| [使用案例]({{ '/docs/manual/use-cases/' | relative_url }}) | 实际场景示例，看看别人怎么用 |
++| [最佳实践]({{ '/docs/manual/best-practices/' | relative_url }}) | 效率技巧与经验总结 |
++| [常见问题]({{ '/docs/manual/faq/' | relative_url }}) | 疑问解答 |
+ 
+ ---
+ 
+-*下一步：[快速开始](/docs/manual/quickstart/)*
+\ No newline at end of file
++*下一步：[快速开始]({{ '/docs/manual/quickstart/' | relative_url }})*
