@@ -33,6 +33,8 @@ export default defineConfig({
           items: [
             { label: 'Opendesk Cli', slug: 'docs/quickstart/cli' },
             { label: 'Opendesk Desktop (桌面版)', slug: 'docs/quickstart/desktop' },
+            { label: 'Desktop 快速上手', slug: 'docs/manual/quickstart' },
+            { label: 'Desktop 快速上手', slug: 'docs/manual/quickstart' },
           ],
         },
         {
@@ -44,6 +46,11 @@ export default defineConfig({
           items: [
             { label: 'Opendesk Cli', slug: 'docs/manual/cli' },
             { label: 'Opendesk Desktop (桌面版)', slug: 'docs/desktop' },
+            { label: '功能指南', slug: 'docs/manual/tools' },
+            { label: '技能系统', slug: 'docs/manual/skills' },
+            { label: '使用案例', slug: 'docs/manual/use-cases' },
+            { label: '最佳实践', slug: 'docs/manual/best-practices' },
+            { label: '常见问题', slug: 'docs/manual/faq' },
           ],
         },
         {
